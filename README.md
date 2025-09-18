@@ -16,21 +16,19 @@ El video de presentación del proyecto está disponible en el siguiente enlace y
 ## 📦 Dependencias utilizadas
 
 **Dependencias de React Native Core**
-
 react
 react-native
 
-**Navegación**
 
+**Navegación**
 @react-navigation/native
 @react-navigation/native-stack
 @react-navigation/bottom-tabs
 
 
+
 **Firebase**
-
 firebase (v9+)
-
 firebase/app
 firebase/auth
 firebase/firestore
