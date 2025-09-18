@@ -20,13 +20,14 @@ El video de presentación del proyecto está disponible en el siguiente enlace y
 react
 react-native
 
-Navegación
+**Navegación**
 
 @react-navigation/native
 @react-navigation/native-stack
 @react-navigation/bottom-tabs
 
-Firebase
+
+**Firebase**
 
 firebase (v9+)
 
