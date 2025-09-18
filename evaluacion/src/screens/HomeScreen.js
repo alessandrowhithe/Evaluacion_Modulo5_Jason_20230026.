@@ -330,12 +330,7 @@ export default function HomeScreen({ navigation }) {
               onPress={() => navigation.navigate('EditProfile')}
               icon={<View style={styles.editIcon} />}
             />
-            <QuickActionButton
-              title="Actualizar"
-              color="#22c55e"
-              onPress={onRefresh}
-              icon={<View style={styles.refreshIcon} />}
-            />
+            {/* Botón Actualizar eliminado */}
           </View>
         </Animated.View>
       </ScrollView>
@@ -612,12 +607,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 6,
   },
-  refreshIcon: {
-    width: 24,
-    height: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 12,
-  },
+  // refreshIcon eliminado
   quickActionText: {
     color: 'white',
     fontSize: 14,

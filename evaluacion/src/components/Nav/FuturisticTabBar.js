@@ -10,6 +10,63 @@ import {
 
 const { width } = Dimensions.get('window');
 
+// Componente de icono luna
+const MoonIcon = ({ color, size, isActive }) => (
+  <View style={[styles.moonContainer, { width: size, height: size }]}>
+    {/* Luna base */}
+    <View 
+      style={[
+        styles.moonBase, 
+        { 
+          backgroundColor: isActive ? '#ff8c42' : '#ffffff', // Anaranjado cuando activo, blanco cuando inactivo
+          width: size * 0.8, 
+          height: size * 0.8,
+          borderWidth: 2,
+          borderColor: '#000000', // Líneas negras para contraste
+        }
+      ]} 
+    />
+    {/* Sombra de la luna (creciente) */}
+    <View 
+      style={[
+        styles.moonShadow, 
+        { 
+          backgroundColor: isActive ? '#e67635' : '#f0f0f0', // Sombra más oscura
+          width: size * 0.6, 
+          height: size * 0.6,
+          borderWidth: 1,
+          borderColor: '#000000',
+        }
+      ]} 
+    />
+    {/* Cráteres de la luna */}
+    <View 
+      style={[
+        styles.crater1, 
+        { 
+          backgroundColor: isActive ? '#d9661f' : '#e0e0e0',
+          width: size * 0.15, 
+          height: size * 0.15,
+          borderWidth: 0.5,
+          borderColor: '#000000',
+        }
+      ]} 
+    />
+    <View 
+      style={[
+        styles.crater2, 
+        { 
+          backgroundColor: isActive ? '#d9661f' : '#e0e0e0',
+          width: size * 0.1, 
+          height: size * 0.1,
+          borderWidth: 0.5,
+          borderColor: '#000000',
+        }
+      ]} 
+    />
+  </View>
+);
+
 export default function FuturisticTabBar({ state, descriptors, navigation }) {
   const [indicatorPosition] = useState(new Animated.Value(0));
   const [pulseAnim] = useState(new Animated.Value(1));
@@ -59,56 +116,31 @@ export default function FuturisticTabBar({ state, descriptors, navigation }) {
   const tabWidth = (width - 40) / state.routes.length;
 
   const getTabIcon = (routeName, isFocused) => {
-    const baseStyle = {
-      width: 20,
-      height: 20,
-      borderRadius: 10,
-      marginBottom: 4,
-    };
-
+    const iconSize = 22;
+    
     switch (routeName) {
       case 'Home':
         return (
-          <View
-            style={[
-              baseStyle,
-              {
-                backgroundColor: isFocused ? '#000000' : '#00d4ff',
-              },
-            ]}
+          <MoonIcon 
+            color={isFocused ? '#ff8c42' : '#ffffff'} 
+            size={iconSize}
+            isActive={isFocused}
           />
         );
       case 'AddUser':
         return (
-          <View
-            style={[
-              baseStyle,
-              {
-                backgroundColor: isFocused ? '#000000' : '#10b981',
-              },
-            ]}
-          />
-        );
-      case 'List':
-        return (
-          <View
-            style={[
-              baseStyle,
-              {
-                backgroundColor: isFocused ? '#000000' : '#a855f7',
-              },
-            ]}
+          <MoonIcon 
+            color={isFocused ? '#ff8c42' : '#ffffff'} 
+            size={iconSize}
+            isActive={isFocused}
           />
         );
       default:
         return (
-          <View
-            style={[
-              baseStyle,
-              {
-                backgroundColor: isFocused ? '#000000' : '#ffffff',
-              },
-            ]}
+          <MoonIcon 
+            color={isFocused ? '#ff8c42' : '#ffffff'} 
+            size={iconSize}
+            isActive={isFocused}
           />
         );
     }
@@ -116,16 +148,12 @@ export default function FuturisticTabBar({ state, descriptors, navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Efectos de fondo */}
-      <View style={styles.backgroundEffects}>
-        <View style={[styles.backgroundLayer, styles.layer1]} />
-        <View style={[styles.backgroundLayer, styles.layer2]} />
-        <View style={[styles.backgroundLayer, styles.layer3]} />
-      </View>
+      {/* Efecto de vidrio transparente */}
+      <View style={styles.glassEffect} />
 
-      {/* Partículas flotantes */}
+      {/* Partículas flotantes sutiles */}
       <View style={styles.particlesContainer}>
-        {[...Array(8)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <Animated.View
             key={i}
             style={[
@@ -205,8 +233,10 @@ export default function FuturisticTabBar({ state, descriptors, navigation }) {
                   },
                 ]}
               >
-                {/* Icono de la pestaña */}
-                {getTabIcon(route.name, isFocused)}
+                {/* Icono luna de la pestaña */}
+                <View style={styles.iconContainer}>
+                  {getTabIcon(route.name, isFocused)}
+                </View>
 
                 {/* Texto de la pestaña */}
                 <Text
@@ -234,12 +264,6 @@ export default function FuturisticTabBar({ state, descriptors, navigation }) {
           );
         })}
       </View>
-
-      {/* Efectos de esquinas */}
-      <View style={styles.cornerEffects}>
-        <View style={[styles.corner, styles.cornerTopLeft]} />
-        <View style={[styles.corner, styles.cornerTopRight]} />
-      </View>
     </View>
   );
 }
@@ -247,7 +271,7 @@ export default function FuturisticTabBar({ state, descriptors, navigation }) {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    backgroundColor: 'rgba(0, 0, 0, 0.95)',
+    backgroundColor: 'transparent', // FONDO COMPLETAMENTE TRANSPARENTE
     paddingHorizontal: 20,
     paddingTop: 12,
     paddingBottom: 20,
@@ -255,34 +279,58 @@ const styles = StyleSheet.create({
     borderTopColor: 'rgba(255, 255, 255, 0.1)',
   },
 
-  // Efectos de fondo
-  backgroundEffects: {
+  // Efecto de vidrio transparente
+  glassEffect: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-  },
-  backgroundLayer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  layer1: {
-    backgroundColor: 'rgba(0, 212, 255, 0.03)',
-  },
-  layer2: {
-    backgroundColor: 'rgba(16, 185, 129, 0.02)',
-    transform: [{ skewX: '15deg' }],
-  },
-  layer3: {
-    backgroundColor: 'rgba(168, 85, 247, 0.02)',
-    transform: [{ skewX: '-15deg' }],
+    backgroundColor: 'rgba(255, 255, 255, 0.08)', // VIDRIO SUTIL
+    backdropFilter: 'blur(20px)', // EFECTO BLUR (iOS)
+    borderRadius: 0, // SIN ESQUINAS
   },
 
-  // Partículas
+  // Estilos para la luna
+  moonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  moonBase: {
+    position: 'absolute',
+    borderRadius: 50, // Círculo perfecto
+    shadowColor: '#000000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  moonShadow: {
+    position: 'absolute',
+    borderRadius: 50,
+    right: -2,
+    top: 2,
+    opacity: 0.7,
+  },
+  crater1: {
+    position: 'absolute',
+    borderRadius: 50,
+    left: 2,
+    top: 1,
+  },
+  crater2: {
+    position: 'absolute',
+    borderRadius: 50,
+    right: 3,
+    bottom: 2,
+  },
+
+  iconContainer: {
+    marginBottom: 4,
+  },
+
+  // Partículas sutiles
   particlesContainer: {
     position: 'absolute',
     top: 0,
@@ -292,10 +340,10 @@ const styles = StyleSheet.create({
   },
   particle: {
     position: 'absolute',
-    width: 1.5,
-    height: 1.5,
-    backgroundColor: 'rgba(0, 212, 255, 0.8)',
-    borderRadius: 0.75,
+    width: 1,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)', // PARTÍCULAS BLANCAS SUTILES
+    borderRadius: 0.5,
     top: Math.random() * 60,
   },
 
@@ -304,8 +352,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 18,
     height: 50,
-    backgroundColor: 'rgba(0, 212, 255, 0.8)',
-    borderRadius: 12,
+    backgroundColor: 'rgba(255, 140, 66, 0.3)', // INDICADOR ANARANJADO SUTIL
+    borderRadius: 25,
     zIndex: 1,
   },
 
@@ -327,11 +375,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 6,
     paddingHorizontal: 8,
-    borderRadius: 8,
+    borderRadius: 12,
     position: 'relative',
   },
   tabContentActive: {
-    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+    backgroundColor: 'rgba(255, 140, 66, 0.15)', // FONDO ACTIVO ANARANJADO
   },
 
   // Texto de la pestaña
@@ -341,13 +389,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   tabLabelActive: {
-    color: '#000000',
-    textShadowColor: 'rgba(0, 212, 255, 0.5)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 4,
+    color: '#ff8c42', // TEXTO ANARANJADO CUANDO ACTIVO
+    textShadowColor: 'rgba(0, 0, 0, 0.5)', // SOMBRA NEGRA PARA CONTRASTE
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   tabLabelInactive: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#ffffff', // TEXTO BLANCO CUANDO INACTIVO
+    textShadowColor: 'rgba(0, 0, 0, 0.7)', // SOMBRA NEGRA PARA CONTRASTE
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   // Efecto de brillo activo
@@ -357,36 +408,8 @@ const styles = StyleSheet.create({
     left: -4,
     right: -4,
     bottom: -4,
-    borderRadius: 12,
-    backgroundColor: 'rgba(0, 212, 255, 0.2)',
+    borderRadius: 16,
+    backgroundColor: 'rgba(255, 140, 66, 0.2)', // BRILLO ANARANJADO
     zIndex: -1,
-  },
-
-  // Efectos de esquinas
-  cornerEffects: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    pointerEvents: 'none',
-  },
-  corner: {
-    position: 'absolute',
-    width: 20,
-    height: 20,
-    borderColor: 'rgba(0, 212, 255, 0.3)',
-  },
-  cornerTopLeft: {
-    top: 8,
-    left: 24,
-    borderTopWidth: 1,
-    borderLeftWidth: 1,
-  },
-  cornerTopRight: {
-    top: 8,
-    right: 24,
-    borderTopWidth: 1,
-    borderRightWidth: 1,
   },
 });

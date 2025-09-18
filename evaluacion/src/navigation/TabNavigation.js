@@ -12,7 +12,6 @@ const Tab = createBottomTabNavigator();
  * Pantallas incluidas:
  * - Home: Pantalla principal del sistema
  * - AddUser: Agregar nuevos usuarios
- * - List: Lista de usuarios y gestión
  * 
  * Utiliza un tab bar personalizado con animaciones y efectos
  * visuales que coinciden con el diseño futurista de la app.
@@ -45,16 +44,6 @@ const TabNavigator = () => (
       options={{ 
         title: 'Agregar Usuario',
         tabBarLabel: 'AGREGAR',
-      }} 
-    />
-    
-    {/* Pantalla de lista de usuarios */}
-    <Tab.Screen 
-      name="List" 
-      component={ListScreen} 
-      options={{ 
-        title: 'Lista de Usuarios',
-        tabBarLabel: 'LISTA',
       }} 
     />
   </Tab.Navigator>
